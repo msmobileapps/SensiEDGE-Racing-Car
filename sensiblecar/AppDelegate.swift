@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import BlueSTSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

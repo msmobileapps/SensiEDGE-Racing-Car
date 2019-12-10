@@ -23,7 +23,40 @@
 		17405ADA239E562C0004BCD3 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 17405AD6239E562C0004BCD3 /* MainMenuScene.sks */; };
 		17405ADB239E562C0004BCD3 /* Smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = 17405AD7239E562C0004BCD3 /* Smoke.sks */; };
 		17A079EC239F772C00F5CA91 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A079EB239F772C00F5CA91 /* Constant.swift */; };
+		17A310F2239F8EA50007E3ED /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A310F1239F8EA50007E3ED /* CoreBluetooth.framework */; };
+		17FAEB91239F999900314E73 /* BlueSTSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17FAEB8A239F98FA00314E73 /* BlueSTSDK.framework */; };
+		17FAEB94239F9B0D00314E73 /* BlueSTSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 17FAEB8A239F98FA00314E73 /* BlueSTSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		17FAEB89239F98FA00314E73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 17FAEB84239F98FA00314E73 /* BlueSTSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 665241F01B0B1BB100931F93;
+			remoteInfo = BlueSTSDK;
+		};
+		17FAEB8B239F98FA00314E73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 17FAEB84239F98FA00314E73 /* BlueSTSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 665241FB1B0B1BB100931F93;
+			remoteInfo = BlueSTSDKTests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		17FAEB93239F9AFF00314E73 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				17FAEB94239F9B0D00314E73 /* BlueSTSDK.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		17405AAF239E542D0004BCD3 /* sensiblecar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sensiblecar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +77,8 @@
 		17405AD6239E562C0004BCD3 /* MainMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenuScene.sks; sourceTree = "<group>"; };
 		17405AD7239E562C0004BCD3 /* Smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Smoke.sks; sourceTree = "<group>"; };
 		17A079EB239F772C00F5CA91 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		17A310F1239F8EA50007E3ED /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		17FAEB84239F98FA00314E73 /* BlueSTSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BlueSTSDK.xcodeproj; path = BlueSTSDK/BlueSTSDK.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +86,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17FAEB91239F999900314E73 /* BlueSTSDK.framework in Frameworks */,
+				17A310F2239F8EA50007E3ED /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,8 +97,10 @@
 		17405AA6239E542D0004BCD3 = {
 			isa = PBXGroup;
 			children = (
+				17FAEB84239F98FA00314E73 /* BlueSTSDK.xcodeproj */,
 				17405AB1239E542D0004BCD3 /* sensiblecar */,
 				17405AB0239E542D0004BCD3 /* Products */,
+				17A310F0239F8EA50007E3ED /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,6 +152,23 @@
 			path = Constant;
 			sourceTree = "<group>";
 		};
+		17A310F0239F8EA50007E3ED /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				17A310F1239F8EA50007E3ED /* CoreBluetooth.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		17FAEB85239F98FA00314E73 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				17FAEB8A239F98FA00314E73 /* BlueSTSDK.framework */,
+				17FAEB8C239F98FA00314E73 /* BlueSTSDKTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -123,6 +179,7 @@
 				17405AAB239E542D0004BCD3 /* Sources */,
 				17405AAC239E542D0004BCD3 /* Frameworks */,
 				17405AAD239E542D0004BCD3 /* Resources */,
+				17FAEB93239F9AFF00314E73 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -155,16 +212,40 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 17405AA6239E542D0004BCD3;
 			productRefGroup = 17405AB0239E542D0004BCD3 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 17FAEB85239F98FA00314E73 /* Products */;
+					ProjectRef = 17FAEB84239F98FA00314E73 /* BlueSTSDK.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				17405AAE239E542D0004BCD3 /* sensiblecar */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		17FAEB8A239F98FA00314E73 /* BlueSTSDK.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BlueSTSDK.framework;
+			remoteRef = 17FAEB89239F98FA00314E73 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		17FAEB8C239F98FA00314E73 /* BlueSTSDKTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = BlueSTSDKTests.xctest;
+			remoteRef = 17FAEB8B239F98FA00314E73 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		17405AAD239E542D0004BCD3 /* Resources */ = {
