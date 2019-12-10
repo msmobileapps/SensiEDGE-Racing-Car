@@ -25,8 +25,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var blueTextureEnemyDown = SKTexture()
     var greenTextureEnemyUp = SKTexture()
     var greenTextureEnemyDown = SKTexture()
-    var yellowTextureEnemyUp = SKTexture()
-    var yellowTextureEnemyDown = SKTexture()
+    var whiteRedCarUp = SKTexture()
+    var whiteRedCarDown = SKTexture()
+    var blackTextureEnemyDown = SKTexture()
+    var blackTextureEnemyUp = SKTexture()
+
     
     var liveTexture = SKTexture()
     
@@ -52,6 +55,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var live2 = SKSpriteNode()
     var live3 = SKSpriteNode()
     var live4 = SKSpriteNode()
+    var live5 = SKSpriteNode()
     
     let SCORE_BETWEEN_LIVES:Int = 50;
     var lastLive: Int = 0;
@@ -91,12 +95,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemyColorTextures[2] = "Blue"
         enemyColorTextures[3] = "Yellow"
         enemyColorTextures[4] = "Green"
+        enemyColorTextures[5] = "Black"
+
         
         //Enemigos
-        textureEnemyUp = SKTexture(imageNamed: "enemyUp")
+        textureEnemyUp = SKTexture(imageNamed: "greenCarUp")
         textureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
         
-        textureEnemyDown = SKTexture(imageNamed: "enemyDown")
+        textureEnemyDown = SKTexture(imageNamed: "greenCarDown")
         textureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
         self.addChild(enemys)
         self.startEnemyCycle()
@@ -130,11 +136,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         greenTextureEnemyDown = SKTexture(imageNamed: "GreenEnemyDown")
         greenTextureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
         
-        yellowTextureEnemyUp = SKTexture(imageNamed: "YellowEnemyUp")
-        yellowTextureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
+        whiteRedCarUp = SKTexture(imageNamed: "whiteRedCarUp")
+        whiteRedCarUp.filteringMode = SKTextureFilteringMode.nearest
         
-        yellowTextureEnemyDown = SKTexture(imageNamed: "YellowEnemyDown")
-        yellowTextureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
+        whiteRedCarDown = SKTexture(imageNamed: "whiteRedCarDown")
+        whiteRedCarDown.filteringMode = SKTextureFilteringMode.nearest
+        
+        blackTextureEnemyUp = SKTexture(imageNamed: "BlackCarUp")
+        blackTextureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
+        
+        blackTextureEnemyDown = SKTexture(imageNamed: "BlackCarDown")
+        blackTextureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
+
     }
     
     func showBar() {
@@ -183,11 +196,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         live4.zPosition = 12
         live4.isHidden = true
         self.addChild(live4)
+        live5 = SKSpriteNode(texture: textureCarUp)
+        live5.setScale(0.6)
+        live5.position = CGPoint(x: self.frame.width*0.5, y: self.frame.height-60)
+        live5.zPosition = 12
+        live5.isHidden = true
+        self.addChild(live5)
     }
     
     func showBackground() {
         //Añadir la carretera
-        let textureRoad = SKTexture(imageNamed: "Road")
+        let textureRoad = SKTexture(imageNamed: "RoadDay")
         textureRoad.filteringMode = SKTextureFilteringMode.nearest
         
         let roadMovement = SKAction.moveBy(x: 0.0, y: -textureRoad.size().height, duration: 3)
@@ -335,7 +354,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     /* Get random color car enemy */
     func getRandomEnemyTexture() -> [SKTexture] {
         var result:[SKTexture]
-        let color = enemyColorTextures[arc4random_uniform(4) + 1]!
+        let color = enemyColorTextures[arc4random_uniform(5) + 1]!
         
         let ranNum:Double = Double(arc4random_uniform(100) + 1)
         let probability = (PROBABILITY_LIVE * 100)
@@ -347,13 +366,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else {
             switch color {
             case "Yellow":
-                result = [yellowTextureEnemyUp, yellowTextureEnemyDown]
+                result = [whiteRedCarUp, whiteRedCarDown]
             case "Blue":
                 result = [blueTextureEnemyUp, blueTextureEnemyDown]
             case "Red":
                 result = [textureEnemyUp, textureEnemyDown]
             case "Green":
                 result = [greenTextureEnemyUp, greenTextureEnemyDown]
+            case "Black":
+                result = [blackTextureEnemyUp, blackTextureEnemyDown]
             default:
                 result = [textureEnemyUp, textureEnemyDown]
             }

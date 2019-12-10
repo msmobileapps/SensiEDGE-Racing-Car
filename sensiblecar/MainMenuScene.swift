@@ -13,17 +13,28 @@ import SpriteKit
 class MainMenuScene: SKScene {
     override func didMove(to view: SKView) {
         self.backgroundColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
-        
+
         let title:SKLabelNode = SKLabelNode()
-        
+
         title.fontName = "AvenirNext-Regular"
-        //title.fontName = "Arial"
-        title.fontSize = 200
-        title.text = "Cars"
+        title.fontSize = 140
+        title.numberOfLines = 2
+        title.text = Constant.firstMainTitle
         title.alpha = 1
-        title.position = CGPoint(x: self.frame.width/2, y: self.frame.height*0.65)
-        
+        title.position = CGPoint(x: self.frame.width/2, y: self.frame.height*0.70)
+
         self.addChild(title)
+        
+        let title1:SKLabelNode = SKLabelNode()
+        
+        title1.fontName = "AvenirNext-Regular"
+        title1.fontSize = 140
+        title1.numberOfLines = 2
+        title1.text = Constant.secondMainTitle
+        title1.alpha = 1
+        title1.position = CGPoint(x: self.frame.width/2, y: self.frame.height*0.60)
+        
+        self.addChild(title1)
         
         let text:SKLabelNode = SKLabelNode()
         text.fontName = "AvenirNext-UltraLight"
@@ -33,10 +44,9 @@ class MainMenuScene: SKScene {
         
         self.addChild(text)
         
-        
-        let car:SKSpriteNode = SKSpriteNode(imageNamed: "CarUp")
+        let car:SKSpriteNode = SKSpriteNode(imageNamed: "CarStart")
+        car.size = CGSize(width: 60, height: 100)
         car.position = CGPoint(x: self.frame.width/2, y: self.frame.height*0.25)
-        car.scale(to: CGSize.zero)
         self.addChild(car)
         
         let appearCar = SKAction.scale(to: 4.0, duration: 1.0)
