@@ -29,7 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var whiteRedCarDown = SKTexture()
     var blackTextureEnemyDown = SKTexture()
     var blackTextureEnemyUp = SKTexture()
-
+    
     var backgroundState: BackgroundState = .DAY
     var liveTexture = SKTexture()
     
@@ -49,6 +49,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var score = NSInteger()
     let scoreLabel = SKLabelNode()
+    let batteryLabel = SKLabelNode()
+    var batteryPercents: NSNumber = 0
     
     var lives:Int = 3//3
     var live1 = SKSpriteNode()
@@ -87,6 +89,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateBackgroundState(_:)), name: .LightStatus, object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(updateBattery(_:)), name: .BatteryStatus, object: nil)
+        
         self.setTextures()
         self.showBar()
         self.showBackground()
@@ -101,7 +105,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemyColorTextures[3] = "Yellow"
         enemyColorTextures[4] = "Green"
         enemyColorTextures[5] = "Black"
-
+        
         //Enemigos
         textureEnemyUp = SKTexture(imageNamed: "greenCarUp")
         textureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
@@ -119,7 +123,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     @objc func updateCarPosition(_ notification:Notification){
-
+        
         guard let status = notification.object as? Car.Status else{
             return
         }
@@ -152,6 +156,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             changeBackgroundTo(.DAY)
             backgroundState = .NIGHT
         }
+    }
+    
+    @objc func updateBattery(_ notification:Notification){
+        
+        guard let battery = notification.object as? NSNumber else{
+            return
+        }
+        batteryPercents = battery
     }
     
     func setTextures(){
@@ -187,7 +199,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         blackTextureEnemyDown = SKTexture(imageNamed: "BlackCarDown")
         blackTextureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
-
+        
     }
     
     func showBar() {
@@ -205,6 +217,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(blackLine)
         
         self.lastLive = 0;
+        
+        self.batteryLabel.fontName = "Arial"
+        self.batteryLabel.fontSize = 30
+        self.batteryLabel.alpha = 1
+        self.batteryLabel.position = CGPoint(x: self.frame.width*0.60, y: self.frame.height-70)
+        self.batteryLabel.zPosition = 12
+        self.batteryLabel.text = "Battery: \(batteryPercents)%"
+        self.addChild(self.batteryLabel)
         
         self.score = 0
         self.scoreLabel.fontName = "Arial"
@@ -245,6 +265,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func showBackground() {
+        
         //Añadir la carretera
         let textureRoad = SKTexture(imageNamed: "RoadDay")
         textureRoad.filteringMode = SKTextureFilteringMode.nearest
@@ -359,13 +380,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy.run(enemyCycle)
             enemys.addChild(enemy)
             if self.enemys.speed < 4 {
-                self.enemys.speed = self.enemys.speed + 0.02
+                self.enemys.speed = self.enemys.speed + 0.015
             }
             if(self.car.node.speed < 2){
-                self.car.node.speed = self.car.node.speed + 0.01
+                self.car.node.speed = self.car.node.speed + 0.0075
             }
             if(self.roads.speed < 2){
-                self.roads.speed = self.roads.speed + 0.02
+                self.roads.speed = self.roads.speed + 0.015
             }
             self.lastLive += 1
             self.score += 1
@@ -542,23 +563,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //print("he tocado en: \(touches.first!.location(in: self.view))")
-//        if(self.gameStatus == .playing){
-//            if touches.first!.location(in: self.view).x < (self.view?.frame.width)!/2 {
-//                self.car.turnLeft()
-//            } else {
-//                self.car.turnRight()
-//                //self.moveCarTo(position: POSITION_MOVE)
-//            }
-//            self.moveCarTo(position: self.car.status)
-//        }
+        //        if(self.gameStatus == .playing){
+        //            if touches.first!.location(in: self.view).x < (self.view?.frame.width)!/2 {
+        //                self.car.turnLeft()
+        //            } else {
+        //                self.car.turnRight()
+        //                //self.moveCarTo(position: POSITION_MOVE)
+        //            }
+        //            self.moveCarTo(position: self.car.status)
+        //        }
         
-//        if backgroundState == .DAY{
-//            changeBackgroundTo(.NIGHT)
-//            backgroundState = .NIGHT
-//        }else{
-//            changeBackgroundTo(.DAY)
-//            backgroundState = .DAY
-//        }
+        //        if backgroundState == .DAY{
+        //            changeBackgroundTo(.NIGHT)
+        //            backgroundState = .NIGHT
+        //        }else{
+        //            changeBackgroundTo(.DAY)
+        //            backgroundState = .DAY
+        //        }
     }
     
     func changeBackgroundTo(_ state: BackgroundState){
@@ -569,7 +590,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let continuousRoadMovement = SKAction.repeatForever(SKAction.sequence([roadMovement, resetRoad]))
         
         roads.removeAllChildren()
-
+        
         for i:Int in 0 ..< Int(2 + self.frame.size.height/textureRoad.size().height) {
             let newRoad = SKSpriteNode(texture: textureRoad)
             newRoad.anchorPoint = CGPoint.zero

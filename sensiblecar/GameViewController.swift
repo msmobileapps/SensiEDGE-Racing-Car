@@ -25,6 +25,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
     
     var isAccelometerDefined = false
     var isLuminosityDefined = false
+    var isBatteryDefined = false
     var xValues:[Int] = []
     var check = true
     
@@ -49,7 +50,11 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
             print("central.state is .unauthorized")
         case .poweredOff:
             print("central.state is .poweredOff")
-            addAlert(title: "", msg: "", btn: "")
+            addAlert(title: "Bluetooth Disconnected", msg: "Please turn on the blutooth connection", btn: "Open Bluetooth Settings", handler: { _ in
+                let url = URL(string:"App-Prefs:root=Bluetooth")
+                let app = UIApplication.shared
+                app.open(url!, options: [:], completionHandler: nil)
+            }, action: nil)
         case .poweredOn:
             print("central.state is .poweredOn")
             mManager.discoveryStart(10*1000)
@@ -93,10 +98,13 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
         return true
     }
     
-    func addAlert(title: String, msg: String, btn: String){
+    func addAlert(title: String, msg: String, btn: String, handler: ((UIAlertAction) -> Void)?, action:UIAlertAction?){
         let alert = UIAlertController(title:title, message:msg, preferredStyle: .alert)
-        let okay = UIAlertAction(title: btn, style: .default, handler: nil)
+        let okay = UIAlertAction(title: btn, style: .default, handler: handler)
         alert.addAction(okay)
+        if let action = action{
+            alert.addAction(action)
+        }
         present(alert, animated: true, completion: nil)
     }
 }
@@ -129,6 +137,7 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
             updateUI()
             if let features = self.mNodes.first?.getFeatures(){
                 for feature in features{
+                   // print(feature.name)
                     if feature.name == "Accelerometer" && isAccelometerDefined{
                         print(node.isEnableNotification(feature))
                         feature.add(self)
@@ -155,11 +164,25 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
                     else{
                         isLuminosityDefined = true
                     }
+                    
+                    if feature.name == "Battery" && isBatteryDefined{
+                        feature.add(self)
+                        feature.addLoggerDelegate(self)
+                        print(feature.featureDelegates)
+                        
+                        if !node.isEnableNotification(feature){
+                            node.enableNotification(feature)
+                        }
+                    }
+                    else{
+                        isBatteryDefined = true
+                    }
+                    
                 }
             }
         }
         else{
-           // addAlert(title: "Connection Problem", msg: "Can't connect to blutooth device", btn: "OK")
+          //  addAlert(title: "Connection Problem", msg: "Can't connect to blutooth device", btn: "OK", handler: nil, action: nil)
         }
     }
     
@@ -213,6 +236,8 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
                     NotificationCenter.default.post(name: .LightStatus, object: BackgroundState.NIGHT)
                 }
             }
+        }else if feature.name == "Battery"{
+            NotificationCenter.default.post(name: .BatteryStatus, object: sample.data.first)
         }
     }
     
@@ -236,4 +261,5 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
 extension NSNotification.Name{
     static let CarPosition = NSNotification.Name(rawValue: "CarPosition")
     static let LightStatus = NSNotification.Name(rawValue: "LightStatus")
+    static let BatteryStatus = NSNotification.Name(rawValue: "BatteryStatus")
 }
