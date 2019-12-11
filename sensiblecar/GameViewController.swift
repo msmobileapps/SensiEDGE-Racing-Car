@@ -35,22 +35,6 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
         mManager.addDelegate(self)
         centralManager = CBCentralManager(delegate: self, queue: nil)
         
-        if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "MainMenuScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                
-                scene.anchorPoint = CGPoint.zero
-                
-                // Present the scene
-                view.presentScene(scene)
-            }
-            view.ignoresSiblingOrder = true
-            
-            //  view.showsFPS = true
-            //  view.showsNodeCount = true
-        }
     }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -65,6 +49,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
             print("central.state is .unauthorized")
         case .poweredOff:
             print("central.state is .poweredOff")
+            addAlert(title: "", msg: "", btn: "")
         case .poweredOn:
             print("central.state is .poweredOn")
             mManager.discoveryStart(10*1000)
@@ -96,7 +81,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return .allButUpsideDown
         } else {
-            return .all
+            return .portraitUpsideDown
         }
     }
     
@@ -107,18 +92,41 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    
+    func addAlert(title: String, msg: String, btn: String){
+        let alert = UIAlertController(title:title, message:msg, preferredStyle: .alert)
+        let okay = UIAlertAction(title: btn, style: .default, handler: nil)
+        alert.addAction(okay)
+        present(alert, animated: true, completion: nil)
+    }
 }
-
-
 
 extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate, BlueSTSDKFeatureAutoConfigurableDelegate, BlueSTSDKNodeStateDelegate, BlueSTSDKFeatureLogDelegate{
     
-    
+    func updateUI(){
+        if let view = self.view as! SKView? {
+            // Load the SKScene from 'GameScene.sks'
+            if let scene = SKScene(fileNamed: "MainMenuScene") {
+                // Set the scale mode to scale to fit the window
+                scene.scaleMode = .aspectFill
+                
+                scene.anchorPoint = CGPoint.zero
+                
+                // Present the scene
+                view.presentScene(scene)
+            }
+            view.ignoresSiblingOrder = true
+            
+            //  view.showsFPS = true
+            //  view.showsNodeCount = true
+        }
+    }
     func feature(_ feature: BlueSTSDKFeature, rawData raw: Data, sample: BlueSTSDKFeatureSample) {
     }
     
     func node(_ node: BlueSTSDKNode, didChange newState: BlueSTSDKNodeState, prevState: BlueSTSDKNodeState) {
         if newState.rawValue == 3{
+            updateUI()
             if let features = self.mNodes.first?.getFeatures(){
                 for feature in features{
                     if feature.name == "Accelerometer" && isAccelometerDefined{
@@ -149,7 +157,9 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
                     }
                 }
             }
-            
+        }
+        else{
+           // addAlert(title: "Connection Problem", msg: "Can't connect to blutooth device", btn: "OK")
         }
     }
     
@@ -185,7 +195,7 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
                         }
                         
                         xValues.removeAll()
-                        xValues.append(Int(truncating: sampleFirst))
+                        xValues.append(Int(Int16(truncating: sampleFirst)))
                         
                         check = false
                     }
