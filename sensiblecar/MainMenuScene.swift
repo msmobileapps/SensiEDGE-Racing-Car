@@ -12,17 +12,17 @@ import SpriteKit
 
 class MainMenuScene: SKScene {
     override func didMove(to view: SKView) {
-        self.backgroundColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
-
+        self.backgroundColor = UIColor.black
+        
         let title:SKLabelNode = SKLabelNode()
-
+        
         title.fontName = "AvenirNext-Regular"
         title.fontSize = 140
         title.numberOfLines = 2
         title.text = Constant.firstMainTitle
         title.alpha = 1
         title.position = CGPoint(x: self.frame.width/2, y: self.frame.height*0.70)
-
+        
         self.addChild(title)
         
         let title1:SKLabelNode = SKLabelNode()

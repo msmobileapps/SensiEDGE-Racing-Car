@@ -11,7 +11,7 @@ import Foundation
 struct Constant {
     
     static let mainTitle = "Sensible Car"
-    static let firstMainTitle = "Sensible"
+    static let firstMainTitle = "SensiBLE"
     static let secondMainTitle = "Car"
 
 }
