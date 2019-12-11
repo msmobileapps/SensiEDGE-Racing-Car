@@ -30,7 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var blackTextureEnemyDown = SKTexture()
     var blackTextureEnemyUp = SKTexture()
 
-    
+    var backgroundState: BackgroundState = .DAY
     var liveTexture = SKTexture()
     
     let PROBABILITY_LIVE = 0.05
@@ -82,6 +82,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     /* Fix tracks positions, defines enemies color and prepare scene*/
     func initializeApp(){
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCarPosition(_:)), name: .CarPosition, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateBackgroundState(_:)), name: .LightStatus, object: nil)
+        
         self.setTextures()
         self.showBar()
         self.showBackground()
@@ -97,7 +102,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemyColorTextures[4] = "Green"
         enemyColorTextures[5] = "Black"
 
-        
         //Enemigos
         textureEnemyUp = SKTexture(imageNamed: "greenCarUp")
         textureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
@@ -112,6 +116,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(smoke)
         
         self.gameStatus = .playing
+    }
+    
+    @objc func updateCarPosition(_ notification:Notification){
+
+        guard let status = notification.object as? Car.Status else{
+            return
+        }
+        
+        if(self.gameStatus == .playing){
+            if status == .left {
+                self.car.turnLeft()
+            }
+            else if status == .right {
+                self.car.turnRight()
+                //self.moveCarTo(position: POSITION_MOVE)
+            }
+            else{
+                self.car.turnCenter()
+            }
+            self.moveCarTo(position: self.car.status)
+        }
+    }
+    
+    @objc func updateBackgroundState(_ notification: Notification){
+        
+        guard let state = notification.object as? BackgroundState else{
+            return
+        }
+        
+        if state == .DAY && backgroundState == .NIGHT{
+            changeBackgroundTo(.NIGHT)
+            backgroundState = .DAY
+        }else if state == .NIGHT && backgroundState == .DAY{
+            changeBackgroundTo(.DAY)
+            backgroundState = .NIGHT
+        }
     }
     
     func setTextures(){
@@ -214,8 +254,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let continuousRoadMovement = SKAction.repeatForever(SKAction.sequence([roadMovement, resetRoad]))
         
         for i:Int in 0 ..< Int(2 + self.frame.size.height/textureRoad.size().height) {
-            var road = SKSpriteNode(texture: textureRoad)
-            road = SKSpriteNode(texture: textureRoad)
+            let road = SKSpriteNode(texture: textureRoad)
             road.anchorPoint = CGPoint.zero
             road.position = CGPoint(x: 0, y: i*Int(road.size.height))
             road.size.width = self.size.width
@@ -503,14 +542,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //print("he tocado en: \(touches.first!.location(in: self.view))")
-        if(self.gameStatus == .playing){
-            if touches.first!.location(in: self.view).x < (self.view?.frame.width)!/2 {
-                self.car.turnLeft()
-            } else {
-                self.car.turnRight()
-                //self.moveCarTo(position: POSITION_MOVE)
-            }
-            self.moveCarTo(position: self.car.status)
+//        if(self.gameStatus == .playing){
+//            if touches.first!.location(in: self.view).x < (self.view?.frame.width)!/2 {
+//                self.car.turnLeft()
+//            } else {
+//                self.car.turnRight()
+//                //self.moveCarTo(position: POSITION_MOVE)
+//            }
+//            self.moveCarTo(position: self.car.status)
+//        }
+        
+//        if backgroundState == .DAY{
+//            changeBackgroundTo(.NIGHT)
+//            backgroundState = .NIGHT
+//        }else{
+//            changeBackgroundTo(.DAY)
+//            backgroundState = .DAY
+//        }
+    }
+    
+    func changeBackgroundTo(_ state: BackgroundState){
+        let textureRoad = SKTexture(imageNamed: state.rawValue)
+        textureRoad.filteringMode = SKTextureFilteringMode.nearest
+        let roadMovement = SKAction.moveBy(x: 0.0, y: -textureRoad.size().height, duration: 3)
+        let resetRoad = SKAction.moveBy(x: 0.0, y: textureRoad.size().height, duration: 0.0)
+        let continuousRoadMovement = SKAction.repeatForever(SKAction.sequence([roadMovement, resetRoad]))
+        
+        roads.removeAllChildren()
+
+        for i:Int in 0 ..< Int(2 + self.frame.size.height/textureRoad.size().height) {
+            let newRoad = SKSpriteNode(texture: textureRoad)
+            newRoad.anchorPoint = CGPoint.zero
+            newRoad.position = CGPoint(x: 0, y: i*Int(newRoad.size.height))
+            newRoad.size.width = self.size.width
+            newRoad.zPosition = -10
+            newRoad.run(continuousRoadMovement)
+            roads.addChild(newRoad)
         }
     }
     

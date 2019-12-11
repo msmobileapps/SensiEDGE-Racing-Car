@@ -40,4 +40,8 @@ class Car: NSObject {
             self.status = .right
         }
     }
+    
+    func turnCenter(){
+        self.status = .center
+    }
 }
