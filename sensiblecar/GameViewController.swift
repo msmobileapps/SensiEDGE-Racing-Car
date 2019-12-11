@@ -29,8 +29,16 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
     var xValues:[Int] = []
     var check = true
     
+    let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
+    let imgSplashScreen: UIImageView = UIImageView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        DispatchQueue.main.async { [unowned self] in
+            self.addImageSplashScreen()
+            self.showActivityIndicatory(uiView: self.view)
+        }
         
         mManager = BlueSTSDKManager.sharedInstance
         mManager.addDelegate(self)
@@ -111,8 +119,31 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
 
 extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate, BlueSTSDKFeatureAutoConfigurableDelegate, BlueSTSDKNodeStateDelegate, BlueSTSDKFeatureLogDelegate{
     
+    func showActivityIndicatory(uiView: UIView) {
+        actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0);
+        actInd.center = uiView.center
+        actInd.hidesWhenStopped = true
+        actInd.style =
+            UIActivityIndicatorView.Style.whiteLarge
+        uiView.addSubview(actInd)
+        actInd.startAnimating()
+    }
+    
+    func addImageSplashScreen(){
+        let img = UIImage(named: "SplashScreenImg")
+        imgSplashScreen.frame = view.frame
+        imgSplashScreen.image = img
+        view.addSubview(imgSplashScreen)
+    }
+    
     func updateUI(){
+        
         if let view = self.view as! SKView? {
+            DispatchQueue.main.async { [unowned self] in
+                self.actInd.stopAnimating()
+                self.imgSplashScreen.isHidden = true
+            }
+
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "MainMenuScene") {
                 // Set the scale mode to scale to fit the window
@@ -180,9 +211,8 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
                     
                 }
             }
-        }
-        else{
-          //  addAlert(title: "Connection Problem", msg: "Can't connect to blutooth device", btn: "OK", handler: nil, action: nil)
+        } else if newState.rawValue == 5 || newState.rawValue == 6 || newState.rawValue == 7{
+                addAlert(title: "Connection Problem", msg: "Can't connect to blutooth device", btn: "OK", handler: nil, action: nil)
         }
     }
     
