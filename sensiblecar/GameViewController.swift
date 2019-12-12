@@ -271,10 +271,10 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
     
     func manager(_ manager: BlueSTSDKManager, didDiscoverNode: BlueSTSDKNode) {
         DispatchQueue.main.async { [unowned self] in
-            self.mNodes.append(didDiscoverNode)
-            self.tableView.reloadData()
-            print(self.tableView.dataSource)
-            print(self.mNodes)
+            if didDiscoverNode.name.contains("Sensi"){
+                self.mNodes.append(didDiscoverNode)
+                self.tableView.reloadData()
+            }
         }
         print("NODE!!!! ",didDiscoverNode)
         
