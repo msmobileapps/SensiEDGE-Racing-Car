@@ -15,6 +15,8 @@ import BlueSTSDK
 
 class GameViewController: UIViewController, CBCentralManagerDelegate {
     
+    let tableView = UITableView()
+    
     var centralManager: CBCentralManager!
     var mAvailableFeatures = [Any]()
     var node: BlueSTSDKNode?
@@ -36,8 +38,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
         super.viewDidLoad()
         
         DispatchQueue.main.async { [unowned self] in
-            self.addImageSplashScreen()
-            self.showActivityIndicatory(uiView: self.view)
+            self.addTableView()
         }
         
         mManager = BlueSTSDKManager.sharedInstance
@@ -84,7 +85,6 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
     override func viewDidDisappear(_ animated: Bool) {
         centralManager.cancelPeripheralConnection(peripheralDevice)
     }
-    
     
     override var shouldAutorotate: Bool {
         return true
@@ -137,6 +137,8 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
     }
     
     func updateUI(){
+        
+        tableView.removeFromSuperview()
         
         if let view = self.view as! SKView? {
             self.actInd.stopAnimating()
@@ -229,7 +231,6 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
         if feature.name == "Accelerometer"{
             if let sampleFirst = sample.data.first  {
                 
-
                 xValue = sampleFirst
                 if check{
                     if let xValue = xValue{
@@ -245,7 +246,7 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
                             print("STAY CENTER ",xValue)
                             NotificationCenter.default.post(name: .CarPosition, object: Car.Status.center)
                         }
-
+                        
                         check = false
                     }
                 }
@@ -269,14 +270,17 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
     }
     
     func manager(_ manager: BlueSTSDKManager, didDiscoverNode: BlueSTSDKNode) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [unowned self] in
             self.mNodes.append(didDiscoverNode)
+            self.tableView.reloadData()
+            print(self.tableView.dataSource)
+            print(self.mNodes)
         }
         print("NODE!!!! ",didDiscoverNode)
-                
-        didDiscoverNode.addStatusDelegate(self)
         
-        didDiscoverNode.connect()
+        //        didDiscoverNode.addStatusDelegate(self)
+        //
+        //        didDiscoverNode.connect()
         
     }
     
@@ -290,4 +294,69 @@ extension NSNotification.Name{
     static let CarPosition = NSNotification.Name(rawValue: "CarPosition")
     static let LightStatus = NSNotification.Name(rawValue: "LightStatus")
     static let BatteryStatus = NSNotification.Name(rawValue: "BatteryStatus")
+}
+
+
+extension GameViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func addTableView(){
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        setupTableView()
+    }
+    
+    func setupTableView() {
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        
+        
+        tableView.register(SubtitleTableViewCell.self, forCellReuseIdentifier: "nodeCell")
+        
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return mNodes.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath)
+        
+        let node = mNodes[indexPath.row]
+        cell.textLabel?.text = node.name
+        cell.detailTextLabel?.text = node.addressEx()
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let node = mNodes[indexPath.row]
+        
+        node.addStatusDelegate(self)
+        node.connect()
+        
+        DispatchQueue.main.async { [unowned self] in
+            self.addImageSplashScreen()
+            self.showActivityIndicatory(uiView: self.view)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
+    
+}
+
+class SubtitleTableViewCell: UITableViewCell {
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
