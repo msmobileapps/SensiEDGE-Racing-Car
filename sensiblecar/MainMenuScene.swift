@@ -46,7 +46,7 @@ class MainMenuScene: SKScene {
         
         let car:SKSpriteNode = SKSpriteNode(imageNamed: "CarStart")
         car.size = CGSize(width: 60, height: 100)
-        car.position = CGPoint(x: self.frame.width/2, y: self.frame.height*0.25)
+        car.position = CGPoint(x: self.frame.width/2, y: self.frame.height*0.3)
         self.addChild(car)
         
         let appearCar = SKAction.scale(to: 4.0, duration: 1.0)
