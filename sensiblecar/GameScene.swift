@@ -227,7 +227,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.batteryLabel.alpha = 1
         self.batteryLabel.position = CGPoint(x: self.frame.width*0.60, y: self.frame.height-70)
         self.batteryLabel.zPosition = 12
-        self.batteryLabel.text = "Battery: \(batteryPercents)%"
+        if batteryPercents != 0{
+            self.batteryLabel.text = "Battery: \(batteryPercents)%"
+        }
+        else{
+            self.batteryLabel.text = ""
+        }
         self.addChild(self.batteryLabel)
         
         self.score = 0
