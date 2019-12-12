@@ -26,7 +26,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
     var isAccelometerDefined = false
     var isLuminosityDefined = false
     var isBatteryDefined = false
-    var xValues:[Int] = []
+    var xValue:NSNumber?
     var check = true
     
     let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -141,7 +141,7 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
         if let view = self.view as! SKView? {
             self.actInd.stopAnimating()
             self.imgSplashScreen.isHidden = true
-
+            
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "MainMenuScene") {
                 // Set the scale mode to scale to fit the window
@@ -168,7 +168,7 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
             }
             if let features = self.mNodes.first?.getFeatures(){
                 for feature in features{
-                   // print(feature.name)
+                    // print(feature.name)
                     if feature.name == "Accelerometer" && isAccelometerDefined{
                         print(node.isEnableNotification(feature))
                         feature.add(self)
@@ -212,7 +212,7 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
                 }
             }
         } else if newState.rawValue == 5 || newState.rawValue == 6 || newState.rawValue == 7{
-                addAlert(title: "Connection Problem", msg: "Can't connect to blutooth device", btn: "OK", handler: nil, action: nil)
+            addAlert(title: "Connection Problem", msg: "Can't connect to blutooth device", btn: "OK", handler: nil, action: nil)
         }
     }
     
@@ -229,33 +229,58 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
         if feature.name == "Accelerometer"{
             if let sampleFirst = sample.data.first  {
                 
-                if xValues.count < 1{
-                    xValues.append(Int(truncating: sampleFirst))
-                }
-                else if check{
-                    if let last = xValues.last{
-                        if last > 450{
-                            print("TURN RIGHT ",last)
+
+                xValue = sampleFirst
+                if check{
+                    if let xValue = xValue{
+                        if Int(truncating: xValue) > 450{
+                            print("TURN RIGHT ",xValue)
                             NotificationCenter.default.post(name: .CarPosition, object: Car.Status.right)
                         }
-                        else if last < -450{
-                            print("TURN LEFT ",last)
+                        else if Int(truncating: xValue) < -450{
+                            print("TURN LEFT ",xValue)
                             NotificationCenter.default.post(name: .CarPosition, object: Car.Status.left)
                         }
                         else{
-                            print("STAY CENTER ",last)
+                            print("STAY CENTER ",xValue)
                             NotificationCenter.default.post(name: .CarPosition, object: Car.Status.center)
                         }
-                        
-                        xValues.removeAll()
-                        xValues.append(Int(Int16(truncating: sampleFirst)))
-                        
+
                         check = false
                     }
                 }
                 else{
                     check = true
                 }
+                
+                
+                
+//                if check{
+//                    if let xValue = xValue{
+//                        if Int(truncating: xValue) - currentBalancedValue > 450{
+//                            print("TURN RIGHT ",xValue," ",currentBalancedValue)
+//                            currentBalancedValue = Int(truncating: xValue)
+//                            NotificationCenter.default.post(name: .CarPosition, object: Car.Status.right)
+//                        }
+//                        else if Int(truncating: xValue) - currentBalancedValue < -450{
+//                            print("TURN LEFT ",xValue," ",currentBalancedValue)
+//                            currentBalancedValue = Int(truncating: xValue)
+//                            NotificationCenter.default.post(name: .CarPosition, object: Car.Status.left)
+//                        }
+//                        else{
+//                            print("STAY CENTER ",xValue," ",currentBalancedValue)
+//                            NotificationCenter.default.post(name: .CarPosition, object: Car.Status.center)
+//                        }
+//
+//                        check = false
+//                    }
+//                }
+//                else{
+//                    check = true
+//                }
+                
+                
+                
             }
         }else if feature.name == "Luminosity"{
             if let sampleFirst = sample.data.first  {

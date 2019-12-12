@@ -43,6 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let enemys = SKNode()
     let roads = SKNode()
+    let grasses = SKNode()
     
     var xTrackPositions: [UInt32:CGFloat] = [:]
     var enemyColorTextures: [UInt32:String] = [:]
@@ -124,11 +125,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     @objc func updateCarPosition(_ notification:Notification){
         
-        guard let status = notification.object as? Car.Status else{
-            return
-        }
-        
         if(self.gameStatus == .playing){
+            guard let status = notification.object as? Car.Status else{
+                return
+            }
             if status == .left {
                 self.car.turnLeft()
             }
@@ -141,29 +141,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             self.moveCarTo(position: self.car.status)
         }
+        
     }
     
     @objc func updateBackgroundState(_ notification: Notification){
         
-        guard let state = notification.object as? BackgroundState else{
-            return
-        }
-        
-        if state == .DAY && backgroundState == .NIGHT{
-            changeBackgroundTo(.NIGHT)
-            backgroundState = .DAY
-        }else if state == .NIGHT && backgroundState == .DAY{
-            changeBackgroundTo(.DAY)
-            backgroundState = .NIGHT
+        if(self.gameStatus == .playing){
+            guard let state = notification.object as? BackgroundState else{
+                return
+            }
+            if state == .DAY && backgroundState == .NIGHT{
+                changeBackgroundTo(.NIGHT)
+                backgroundState = .DAY
+            }else if state == .NIGHT && backgroundState == .DAY{
+                changeBackgroundTo(.DAY)
+                backgroundState = .NIGHT
+            }
         }
     }
     
     @objc func updateBattery(_ notification:Notification){
         
-        guard let battery = notification.object as? NSNumber else{
-            return
+        if(self.gameStatus == .playing){
+            guard let battery = notification.object as? NSNumber else{
+                return
+            }
+            batteryPercents = battery
         }
-        batteryPercents = battery
     }
     
     func setTextures(){
@@ -265,6 +269,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func showBackground() {
+        
+        //        let textureGrass = SKTexture(imageNamed: "Grass")
+        //        textureGrass.filteringMode = SKTextureFilteringMode.nearest
+        //
+        //        let grassMovement = SKAction.moveBy(x: 0.0, y: -textureGrass.size().height, duration: 3)
+        //        let resetGrass = SKAction.moveBy(x: 0.0, y: textureGrass.size().height, duration: 0.0)
+        //        let continuousGrassMovement = SKAction.repeatForever(SKAction.sequence([grassMovement, resetGrass]))
+        //
+        //        for i:Int in 0 ..< Int(2 + self.frame.size.height/textureGrass.size().height) {
+        //            let grass = SKSpriteNode(texture: textureGrass)
+        //            grass.anchorPoint = CGPoint.zero
+        //            grass.position = CGPoint(x: 0, y: i*Int(grass.size.height))
+        //            grass.size.width = view?.frame.width ?? 2000
+        //            grass.zPosition = -10
+        //            grass.run(continuousGrassMovement)
+        //            grasses.addChild(grass)
+        //        }
+        
+        //        if let grassImage = UIImage(named: "Grass"){
+        ////            grassImage = resizeImage(image: grassImage, targetSize: view?.frame.size ?? CGSize(width: 2000, height: 2000))
+        //            let grassView = UIImageView(image: grassImage)
+        //            view?.addSubview(grassView)
+        //            view?.sendSubviewToBack(grassView)
+        //        }
         
         //Añadir la carretera
         let textureRoad = SKTexture(imageNamed: "RoadDay")
@@ -613,6 +641,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
     
 }
