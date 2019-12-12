@@ -234,12 +234,12 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
                 if check{
                     if let xValue = xValue{
                         if Int(truncating: xValue) > 450{
-                            print("TURN RIGHT ",xValue)
-                            NotificationCenter.default.post(name: .CarPosition, object: Car.Status.right)
-                        }
-                        else if Int(truncating: xValue) < -450{
                             print("TURN LEFT ",xValue)
                             NotificationCenter.default.post(name: .CarPosition, object: Car.Status.left)
+                        }
+                        else if Int(truncating: xValue) < -450{
+                            print("TURN RIGHT ",xValue)
+                            NotificationCenter.default.post(name: .CarPosition, object: Car.Status.right)
                         }
                         else{
                             print("STAY CENTER ",xValue)
@@ -252,34 +252,6 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
                 else{
                     check = true
                 }
-                
-                
-                
-//                if check{
-//                    if let xValue = xValue{
-//                        if Int(truncating: xValue) - currentBalancedValue > 450{
-//                            print("TURN RIGHT ",xValue," ",currentBalancedValue)
-//                            currentBalancedValue = Int(truncating: xValue)
-//                            NotificationCenter.default.post(name: .CarPosition, object: Car.Status.right)
-//                        }
-//                        else if Int(truncating: xValue) - currentBalancedValue < -450{
-//                            print("TURN LEFT ",xValue," ",currentBalancedValue)
-//                            currentBalancedValue = Int(truncating: xValue)
-//                            NotificationCenter.default.post(name: .CarPosition, object: Car.Status.left)
-//                        }
-//                        else{
-//                            print("STAY CENTER ",xValue," ",currentBalancedValue)
-//                            NotificationCenter.default.post(name: .CarPosition, object: Car.Status.center)
-//                        }
-//
-//                        check = false
-//                    }
-//                }
-//                else{
-//                    check = true
-//                }
-                
-                
                 
             }
         }else if feature.name == "Luminosity"{
@@ -301,6 +273,7 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
             self.mNodes.append(didDiscoverNode)
         }
         print("NODE!!!! ",didDiscoverNode)
+                
         didDiscoverNode.addStatusDelegate(self)
         
         didDiscoverNode.connect()
