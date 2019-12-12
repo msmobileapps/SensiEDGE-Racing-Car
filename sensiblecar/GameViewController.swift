@@ -139,10 +139,8 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
     func updateUI(){
         
         if let view = self.view as! SKView? {
-            DispatchQueue.main.async { [unowned self] in
-                self.actInd.stopAnimating()
-                self.imgSplashScreen.isHidden = true
-            }
+            self.actInd.stopAnimating()
+            self.imgSplashScreen.isHidden = true
 
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "MainMenuScene") {
@@ -165,7 +163,9 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
     
     func node(_ node: BlueSTSDKNode, didChange newState: BlueSTSDKNodeState, prevState: BlueSTSDKNodeState) {
         if newState.rawValue == 3{
-            updateUI()
+            DispatchQueue.main.async { [unowned self] in
+                self.updateUI()
+            }
             if let features = self.mNodes.first?.getFeatures(){
                 for feature in features{
                    // print(feature.name)
