@@ -27,6 +27,7 @@
 		17A310F2239F8EA50007E3ED /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A310F1239F8EA50007E3ED /* CoreBluetooth.framework */; };
 		17FAEB91239F999900314E73 /* BlueSTSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17FAEB8A239F98FA00314E73 /* BlueSTSDK.framework */; };
 		17FAEB94239F9B0D00314E73 /* BlueSTSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 17FAEB8A239F98FA00314E73 /* BlueSTSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA175B8623A656CB00659498 /* NodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA175B8523A656CB00659498 /* NodeInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		17A079EB239F772C00F5CA91 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		17A310F1239F8EA50007E3ED /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		17FAEB84239F98FA00314E73 /* BlueSTSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BlueSTSDK.xcodeproj; path = BlueSTSDK/BlueSTSDK.xcodeproj; sourceTree = "<group>"; };
+		DA175B8523A656CB00659498 /* NodeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 				17405ACC239E54D10004BCD3 /* MainMenuScene.swift */,
 				17405AD0239E55130004BCD3 /* CoreDataManager.swift */,
 				17405AD2239E55280004BCD3 /* GameViewController.swift */,
+				DA175B8523A656CB00659498 /* NodeInfo.swift */,
 			);
 			path = sensiblecar;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA175B8623A656CB00659498 /* NodeInfo.swift in Sources */,
 				17405ACD239E54D10004BCD3 /* MainMenuScene.swift in Sources */,
 				17405ACB239E54B10004BCD3 /* GameOverScene.swift in Sources */,
 				17A079EC239F772C00F5CA91 /* Constant.swift in Sources */,

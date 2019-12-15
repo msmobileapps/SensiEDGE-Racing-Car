@@ -139,22 +139,26 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
 //              - key : "kCBAdvDataIsConnectable"
 //              - value : 1
             
-//            _type = _advertiseInfo.boardType;
-//            _typeId = _advertiseInfo.deviceId;
-//            _name = _advertiseInfo.name;
-//            _address = _advertiseInfo.address;
-//            _protocolVersion = _advertiseInfo.protocolVersion;
-//            _hasExtension = _advertiseInfo.hasGeneralPurpose;
-//            _isSleeping = _advertiseInfo.isSleeping;
-//            _advertiseBitMask = _advertiseInfo.featureMap;
+//        @objc var name:String? {get}
+//        @objc var address:String? {get}
+//        @objc var featureMap:UInt32 {get}
+//        @objc var deviceId:UInt8 {get}
+//        @objc var protocolVersion:UInt8 {get}
+//        @objc var boardType:BlueSTSDKNodeType {get}
+//        @objc var isSleeping:Bool {get}
+//        @objc var hasGeneralPurpose:Bool {get}
+//        @objc var txPower:UInt8 {get}
+            
+            let nodeInfo = NodeInfo(name: peripheral.name, address: nil, featureMap: 0, deviceId: UInt8(peripheral.identifier.uuidString) ?? 0, protocolVersion: 0, boardType: BlueSTSDKNodeType.blue_Coin, isSleeping: false, hasGeneralPurpose: false, txPower: 0)
                         
             var advertiseInfo = advertisementData
-            advertiseInfo["kCBAdvDataManufacturerData"] = peripheral
+            advertiseInfo["kCBAdvDataManufacturerData"] = nodeInfo
             advertiseInfo["kCBAdvDataTxPowerLevel"] = 0
             
             print(advertisementData)
 
-            let firstMatch = mAdvertiseFilters.lazy.compactMap{ $0.filter(advertisementData)}.first
+            let firstMatch = mAdvertiseFilters.lazy.compactMap{ $0.filter(advertiseInfo)}.first
+            print(firstMatch)
             if let info = firstMatch{
                 let node = BlueSTSDKNode(peripheral, rssi: RSSI, advertiseInfo:info)
                 mNodes.append(node)
@@ -176,19 +180,6 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
 //            mNodes.append(node)
 //            tableView.reloadData()
         }
-        
-        
-        
-        
-//        @objc var name:String? {get}
-//        @objc var address:String? {get}
-//        @objc var featureMap:UInt32 {get}
-//        @objc var deviceId:UInt8 {get}
-//        @objc var protocolVersion:UInt8 {get}
-//        @objc var boardType:BlueSTSDKNodeType {get}
-//        @objc var isSleeping:Bool {get}
-//        @objc var hasGeneralPurpose:Bool {get}
-//        @objc var txPower:UInt8 {get}
         
     }
   
