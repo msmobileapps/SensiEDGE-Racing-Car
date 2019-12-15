@@ -12,7 +12,6 @@ import GameplayKit
 import CoreBluetooth
 import BlueSTSDK
 
-
 class GameViewController: UIViewController, CBCentralManagerDelegate {
     
     let tableView = UITableView()
@@ -40,10 +39,11 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
         DispatchQueue.main.async { [unowned self] in
             self.addTableView()
         }
-        
+                
         mManager = BlueSTSDKManager.sharedInstance
         mManager.addDelegate(self)
         centralManager = CBCentralManager(delegate: self, queue: nil)
+        centralManager.delegate = self
         
     }
     
@@ -67,6 +67,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
         case .poweredOn:
             print("central.state is .poweredOn")
             mManager.discoveryStart(10*1000)
+            central.scanForPeripherals(withServices: nil, options: nil)
         @unknown default:
             print("default")
         }
@@ -115,6 +116,84 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
         }
         present(alert, animated: true, completion: nil)
     }
+    
+    
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        let mAdvertiseFilters:[BlueSTSDKAdvertiseFilter] = BlueSTSDKManager.DEFAULT_ADVERTISE_FILTER
+        
+        if let name = peripheral.name,
+            name.contains("SensiTHING"){
+            print("NEW ",peripheral.name)
+                        
+//            ▿ 0 : 2 elements
+//              - key : "kCBAdvDataManufacturerData"
+//              - value : <01826dbe 8440>
+//            ▿ 1 : 2 elements
+//              - key : "kCBAdvDataLocalName"
+//              - value : SensiBLE2.0
+//            ▿ 2 : 2 elements
+//              - key : "kCBAdvDataTxPowerLevel"
+//              - value : 0
+//            ▿ 3 : 2 elements
+//              - key : "kCBAdvDataIsConnectable"
+//              - value : 1
+            
+//            _type = _advertiseInfo.boardType;
+//            _typeId = _advertiseInfo.deviceId;
+//            _name = _advertiseInfo.name;
+//            _address = _advertiseInfo.address;
+//            _protocolVersion = _advertiseInfo.protocolVersion;
+//            _hasExtension = _advertiseInfo.hasGeneralPurpose;
+//            _isSleeping = _advertiseInfo.isSleeping;
+//            _advertiseBitMask = _advertiseInfo.featureMap;
+            
+            BlueSTSDKAdvertiseInfo(name: "SensiTHING", address: nil, featureMap: 0, deviceId: peripheral.identifier, protocolVersion: 0,
+                                   boardType: BlueSTSDKNodeType.blue_Coin, isSleeping: true, hasGeneralPurpose: true, txPower: 0)
+                        
+            var advertiseInfo = advertisementData
+            advertiseInfo["kCBAdvDataManufacturerData"] = peripheral
+            advertiseInfo["kCBAdvDataTxPowerLevel"] = 0
+            
+            print(advertisementData)
+
+            let firstMatch = mAdvertiseFilters.lazy.compactMap{ $0.filter(advertisementData)}.first
+            if let info = firstMatch{
+                let node = BlueSTSDKNode(peripheral, rssi: RSSI, advertiseInfo:info)
+                mNodes.append(node)
+                tableView.reloadData()
+            }
+            
+//            mPeripheral=peripheral;
+//            mPeripheral.delegate=self;
+//
+//            _tag = peripheral.identifier.UUIDString;
+//            [self updateAdvertiseInfo:advertiseInfo];
+//
+//            [self updateTxPower: [NSNumber numberWithUnsignedChar:_advertiseInfo.txPower]];
+//
+//            [self updateRssi:rssi];
+            
+//            let node = BlueSTSDKNode()
+//
+//            mNodes.append(node)
+//            tableView.reloadData()
+        }
+        
+        
+        
+        
+//        @objc var name:String? {get}
+//        @objc var address:String? {get}
+//        @objc var featureMap:UInt32 {get}
+//        @objc var deviceId:UInt8 {get}
+//        @objc var protocolVersion:UInt8 {get}
+//        @objc var boardType:BlueSTSDKNodeType {get}
+//        @objc var isSleeping:Bool {get}
+//        @objc var hasGeneralPurpose:Bool {get}
+//        @objc var txPower:UInt8 {get}
+        
+    }
+  
 }
 
 extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate, BlueSTSDKFeatureAutoConfigurableDelegate, BlueSTSDKNodeStateDelegate, BlueSTSDKFeatureLogDelegate{

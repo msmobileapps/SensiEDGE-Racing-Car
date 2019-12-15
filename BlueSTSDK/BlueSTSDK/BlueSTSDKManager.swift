@@ -258,6 +258,26 @@ extension BlueSTSDKManager : CBCentralManagerDelegate {
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         let tag = peripheral.identifier.uuidString
         
+//        if let name = peripheral.name,
+//            name.contains("SensiTHING"){
+//            print(peripheral.name)
+//
+//            if let node = nodeWith(tag: tag){
+//                node.updateRssi(RSSI)
+//            }else{
+//                //get the fist value != nil returned by a filter
+//                let firstMatch = mAdvertiseFilters.lazy.compactMap{ $0.filter(advertisementData)}
+//
+//                for f in firstMatch{
+//                    let newNode = BlueSTSDKNode(peripheral, rssi: RSSI, advertiseInfo:f)
+//                    addAndNotify(node: newNode)
+//                }
+////                if let info = firstMatch{
+////                    let newNode = BlueSTSDKNode(peripheral, rssi: RSSI, advertiseInfo:info)
+////                    addAndNotify(node: newNode)
+////                }
+//            }
+//        }
         
         if let node = nodeWith(tag: tag){
             node.updateRssi(RSSI)
@@ -267,6 +287,7 @@ extension BlueSTSDKManager : CBCentralManagerDelegate {
             if let info = firstMatch{
                 let newNode = BlueSTSDKNode(peripheral, rssi: RSSI, advertiseInfo:info)
                 addAndNotify(node: newNode)
+                print(advertisementData)
             }
         }
     }
