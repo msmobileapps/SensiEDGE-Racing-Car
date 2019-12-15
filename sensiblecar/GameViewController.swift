@@ -32,6 +32,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
     
     let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
     let imgSplashScreen: UIImageView = UIImageView()
+    let logoSplashScreen: UIImageView = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -215,6 +216,13 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
         view.addSubview(imgSplashScreen)
     }
     
+    func addLogoSplashScreen(){
+        let img = UIImage(named: "ms-apps-logo")
+        logoSplashScreen.frame = CGRect(x: (UIScreen.main.bounds.size.width - (UIScreen.main.bounds.size.width / 2.5)) / 2, y: view.frame.maxY * 0.8, width: UIScreen.main.bounds.size.width / 2.5, height: UIScreen.main.bounds.size.height / 8)
+        logoSplashScreen.image = img
+        view.addSubview(logoSplashScreen)
+    }
+    
     func updateUI(){
         
         tableView.removeFromSuperview()
@@ -222,6 +230,7 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
         if let view = self.view as! SKView? {
             self.actInd.stopAnimating()
             self.imgSplashScreen.isHidden = true
+            self.logoSplashScreen.isHidden = true
             
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "MainMenuScene") {
@@ -420,6 +429,7 @@ extension GameViewController: UITableViewDataSource, UITableViewDelegate {
         DispatchQueue.main.async { [unowned self] in
             self.addImageSplashScreen()
             self.showActivityIndicatory(uiView: self.view)
+            self.addLogoSplashScreen()
         }
     }
     
