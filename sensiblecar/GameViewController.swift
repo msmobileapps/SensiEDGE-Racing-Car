@@ -138,8 +138,8 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
     }
     
     func addLogoSplashScreen(){
-        let img = UIImage(named: "ms-apps-logo")
-        logoSplashScreen.frame = CGRect(x: (UIScreen.main.bounds.size.width - (UIScreen.main.bounds.size.width / 2.5)) / 2, y: view.frame.maxY * 0.8, width: UIScreen.main.bounds.size.width / 2.5, height: UIScreen.main.bounds.size.height / 8)
+        let img = UIImage(named: "ms-apps-logo-splash")
+        logoSplashScreen.frame = CGRect(x: (UIScreen.main.bounds.size.width - (UIScreen.main.bounds.size.width / 2.5)) / 2, y: view.frame.maxY * 0.8, width: UIScreen.main.bounds.size.width / 2.5, height: UIScreen.main.bounds.size.width / 10)
         logoSplashScreen.image = img
         view.addSubview(logoSplashScreen)
     }

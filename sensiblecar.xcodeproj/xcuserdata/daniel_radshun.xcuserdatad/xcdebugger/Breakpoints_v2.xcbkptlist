@@ -7,16 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "20CF12BD-3215-47AC-B297-F2CF12D1F250"
-            shouldBeEnabled = "No"
+            uuid = "D7022CBB-36DF-491A-8DC9-A968D7FE7657"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BlueSTSDK/BlueSTSDK/BlueSTSDKManager.swift"
+            filePath = "sensiblecar/GameScene.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
-            landmarkName = "centralManager(_:didDiscover:advertisementData:rssi:)"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "initializeApp()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E16A8E4D-E20B-414D-83A5-59597A768A09"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "sensiblecar/GameScene.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "initializeApp()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
