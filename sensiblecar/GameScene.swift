@@ -77,6 +77,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let smoke = SKEmitterNode(fileNamed: "Smoke")!
     
     override func didMove(to view: SKView) {
+        
+        GameViewController.isOnlyPortrait = false
+        
         self.backgroundColor = UIColor.clear
         
         self.physicsWorld.contactDelegate = self
@@ -160,9 +163,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
            }
     }
     
-        func saveUserDefault() {
-            defaults.set(true, forKey: "isLogoLoded")
-        }
+    func saveUserDefault() {
+        defaults.set(true, forKey: "isLogoLoded")
+    }
     
     @objc func rotated() {
         if UIDevice.current.orientation.isLandscape {

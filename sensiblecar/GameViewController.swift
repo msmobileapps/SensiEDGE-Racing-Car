@@ -30,6 +30,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
     var isBatteryDefined = false
     var xValue:NSNumber?
     var check = true
+    static var isOnlyPortrait = true
     
     let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
     let imgSplashScreen: UIImageView = UIImageView()
@@ -93,9 +94,13 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
+            return .portrait
         } else {
-            return .portraitUpsideDown
+            if GameViewController.isOnlyPortrait{
+                return .portrait
+            }else{
+                return .allButUpsideDown
+            }
         }
     }
     
