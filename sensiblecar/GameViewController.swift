@@ -147,9 +147,6 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
 //            _hasExtension = _advertiseInfo.hasGeneralPurpose;
 //            _isSleeping = _advertiseInfo.isSleeping;
 //            _advertiseBitMask = _advertiseInfo.featureMap;
-            
-            BlueSTSDKAdvertiseInfo(name: "SensiTHING", address: nil, featureMap: 0, deviceId: peripheral.identifier, protocolVersion: 0,
-                                   boardType: BlueSTSDKNodeType.blue_Coin, isSleeping: true, hasGeneralPurpose: true, txPower: 0)
                         
             var advertiseInfo = advertisementData
             advertiseInfo["kCBAdvDataManufacturerData"] = peripheral
