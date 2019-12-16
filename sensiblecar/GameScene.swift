@@ -273,8 +273,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func changeCarsLightsTo(_ state:BackgroundState){
         if state == .NIGHT{
-            textureCarUp = SKTexture(imageNamed: "CarUpNight")
-            textureCarUp.filteringMode = SKTextureFilteringMode.nearest
+            let textureUpNight = SKTexture(imageNamed: "CarUpNight")
+            let textureDownNight = SKTexture(imageNamed: "CarDownNight")
+            
+            let carMovement = SKAction.animate(with: [textureDownNight, textureUpNight], timePerFrame: 0.30)
+            let driving = SKAction.repeatForever(carMovement)
+            car.node.run(driving)
             
             textureCarDown = SKTexture(imageNamed: "CarDownNight")
             textureCarDown.filteringMode = SKTextureFilteringMode.nearest
@@ -308,12 +312,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             blackTextureEnemyDown = SKTexture(imageNamed: "BlackCarDownNight")
             blackTextureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
-        }else if state == .DAY{
-            textureCarUp = SKTexture(imageNamed: "CarUp")
-            textureCarUp.filteringMode = SKTextureFilteringMode.nearest
             
-            textureCarDown = SKTexture(imageNamed: "CarDown")
-            textureCarDown.filteringMode = SKTextureFilteringMode.nearest
+        }else if state == .DAY{
+            let textureUpNight = SKTexture(imageNamed: "CarUp")
+            let textureDownNight = SKTexture(imageNamed: "CarDown")
+            
+            let carMovement = SKAction.animate(with: [textureDownNight, textureUpNight], timePerFrame: 0.30)
+            let driving = SKAction.repeatForever(carMovement)
+            car.node.run(driving)
             
             blueTextureEnemyUp = SKTexture(imageNamed: "OrangeEnemyUp")
             blueTextureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
