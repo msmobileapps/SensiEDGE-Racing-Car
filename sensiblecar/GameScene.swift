@@ -140,8 +140,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func addLogoSplashScreen(){
         let img = UIImage(named: "ms-apps-logo")
         if let view = view{
-            logoSplashScreen.frame = CGRect(x: 25, y: view.frame.maxY * 0.4, width: UIScreen.main.bounds.size.width / 20, height: UIScreen.main.bounds.size.width / 5)
-            logoSplashScreen.transform = CGAffineTransform(rotationAngle: .pi / 6)
+            
+            if UIDevice.current.orientation.isPortrait {
+                logoSplashScreen.frame = CGRect(x: 25, y: UIScreen.main.bounds.size.width * 0.55, width: UIScreen.main.bounds.size.width / 25, height: UIScreen.main.bounds.size.width / 6)
+                logoSplashScreen.transform = CGAffineTransform(rotationAngle: .pi / 6)
+            } else if UIDevice.current.orientation.isLandscape {
+                logoSplashScreen.frame = CGRect(x: 125, y: UIScreen.main.bounds.size.height * 0.45, width: UIScreen.main.bounds.size.height / 20, height: UIScreen.main.bounds.size.height / 5)
+                logoSplashScreen.transform = CGAffineTransform(rotationAngle: .pi / 6)
+            }
+            
             logoSplashScreen.image = img
             logoSplashScreen.isUserInteractionEnabled = true
             let tapGestureRecognizerTime = UITapGestureRecognizer(target: self, action: #selector(imageTimeTapped))
@@ -168,18 +175,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     @objc func rotated() {
-        if UIDevice.current.orientation.isLandscape {
-            if let view = view{
-                logoSplashScreen.transform = CGAffineTransform(rotationAngle: -(.pi / 6))
-                logoSplashScreen.frame = CGRect(x: 125, y: view.frame.maxY * 0.3, width: UIScreen.main.bounds.size.height / 20, height: UIScreen.main.bounds.size.height / 5)
-                logoSplashScreen.transform = CGAffineTransform(rotationAngle: .pi / 6)
-            }
-        } else {
-            if let view = view{
-                logoSplashScreen.transform = CGAffineTransform(rotationAngle: -(.pi / 6))
-                logoSplashScreen.frame = CGRect(x: 25, y: view.frame.maxY * 0.51, width: UIScreen.main.bounds.size.width / 25, height: UIScreen.main.bounds.size.width / 6)
-                logoSplashScreen.transform = CGAffineTransform(rotationAngle: .pi / 6)
-            }
+        if UIDevice.current.orientation.isPortrait {
+            logoSplashScreen.transform = CGAffineTransform(rotationAngle: -(.pi / 6))
+            logoSplashScreen.frame = CGRect(x: 25, y: UIScreen.main.bounds.size.width * 0.55, width: UIScreen.main.bounds.size.width / 25, height: UIScreen.main.bounds.size.width / 6)
+            logoSplashScreen.transform = CGAffineTransform(rotationAngle: .pi / 6)
+        } else if UIDevice.current.orientation.isLandscape {
+            logoSplashScreen.transform = CGAffineTransform(rotationAngle: -(.pi / 6))
+            logoSplashScreen.frame = CGRect(x: 125, y: UIScreen.main.bounds.size.height * 0.45, width: UIScreen.main.bounds.size.height / 20, height: UIScreen.main.bounds.size.height / 5)
+            logoSplashScreen.transform = CGAffineTransform(rotationAngle: .pi / 6)
         }
     }
 
