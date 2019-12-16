@@ -32,7 +32,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var backgroundState: BackgroundState = .DAY
     var liveTexture = SKTexture()
-    
+    let logoSplashScreen: UIImageView = UIImageView()
+    let defaults = UserDefaults.standard
+
+        
     let PROBABILITY_LIVE = 0.05
     
     struct physicsCategory {
@@ -74,6 +77,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let smoke = SKEmitterNode(fileNamed: "Smoke")!
     
     override func didMove(to view: SKView) {
+        
+        GameViewController.isOnlyPortrait = false
+        
         self.backgroundColor = UIColor.clear
         
         self.physicsWorld.contactDelegate = self
@@ -92,10 +98,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateBattery(_:)), name: .BatteryStatus, object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+        
         self.setTextures()
         self.showBar()
         self.showBackground()
         self.showPlayer()
+        
+        let isLogoLoaded = defaults.bool(forKey: "isLogoLoded")
+
+        if !isLogoLoaded {
+            self.addLogoSplashScreen()
+        }
         
         xTrackPositions[1] = POSITION_TRACK_1 * self.frame.size.width
         xTrackPositions[2] = POSITION_TRACK_2 * self.frame.size.width
@@ -123,6 +137,55 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.gameStatus = .playing
     }
     
+    func addLogoSplashScreen(){
+        let img = UIImage(named: "ms-apps-logo")
+        if let view = view{
+            
+            if UIDevice.current.orientation.isPortrait {
+                logoSplashScreen.frame = CGRect(x: 25, y: UIScreen.main.bounds.size.width * 0.55, width: UIScreen.main.bounds.size.width / 25, height: UIScreen.main.bounds.size.width / 6)
+                logoSplashScreen.transform = CGAffineTransform(rotationAngle: .pi / 6)
+            } else if UIDevice.current.orientation.isLandscape {
+                logoSplashScreen.frame = CGRect(x: 125, y: UIScreen.main.bounds.size.height * 0.45, width: UIScreen.main.bounds.size.height / 20, height: UIScreen.main.bounds.size.height / 5)
+                logoSplashScreen.transform = CGAffineTransform(rotationAngle: .pi / 6)
+            }
+            
+            logoSplashScreen.image = img
+            logoSplashScreen.isUserInteractionEnabled = true
+            let tapGestureRecognizerTime = UITapGestureRecognizer(target: self, action: #selector(imageTimeTapped))
+            tapGestureRecognizerTime.numberOfTapsRequired = 1
+            logoSplashScreen.addGestureRecognizer(tapGestureRecognizerTime)
+            view.addSubview(logoSplashScreen)
+            saveUserDefault()
+        }
+    }
+    @objc func imageTimeTapped(_ sender: UITapGestureRecognizer) {
+      if let url = URL(string: "http://www.msapps.mobi") {
+               if UIApplication.shared.canOpenURL(url) {
+                   if #available(iOS 10.0, *) {
+                       UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                   } else {
+                       UIApplication.shared.openURL(url)
+                   }
+               }
+           }
+    }
+    
+    func saveUserDefault() {
+        defaults.set(true, forKey: "isLogoLoded")
+    }
+    
+    @objc func rotated() {
+        if UIDevice.current.orientation.isPortrait {
+            logoSplashScreen.transform = CGAffineTransform(rotationAngle: -(.pi / 6))
+            logoSplashScreen.frame = CGRect(x: 25, y: UIScreen.main.bounds.size.width * 0.55, width: UIScreen.main.bounds.size.width / 25, height: UIScreen.main.bounds.size.width / 6)
+            logoSplashScreen.transform = CGAffineTransform(rotationAngle: .pi / 6)
+        } else if UIDevice.current.orientation.isLandscape {
+            logoSplashScreen.transform = CGAffineTransform(rotationAngle: -(.pi / 6))
+            logoSplashScreen.frame = CGRect(x: 125, y: UIScreen.main.bounds.size.height * 0.45, width: UIScreen.main.bounds.size.height / 20, height: UIScreen.main.bounds.size.height / 5)
+            logoSplashScreen.transform = CGAffineTransform(rotationAngle: .pi / 6)
+        }
+    }
+
     @objc func updateCarPosition(_ notification:Notification){
         
         if(self.gameStatus == .playing){

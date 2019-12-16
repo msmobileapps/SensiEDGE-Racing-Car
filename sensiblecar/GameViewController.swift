@@ -29,6 +29,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
     var isBatteryDefined = false
     var xValue:NSNumber?
     var check = true
+    static var isOnlyPortrait = true
     
     let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
     let imgSplashScreen: UIImageView = UIImageView()
@@ -94,9 +95,13 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
+            return .portrait
         } else {
-            return .portraitUpsideDown
+            if GameViewController.isOnlyPortrait{
+                return .portrait
+            }else{
+                return .allButUpsideDown
+            }
         }
     }
     
@@ -205,8 +210,8 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
     }
     
     func addLogoSplashScreen(){
-        let img = UIImage(named: "ms-apps-logo")
-        logoSplashScreen.frame = CGRect(x: (UIScreen.main.bounds.size.width - (UIScreen.main.bounds.size.width / 2.5)) / 2, y: view.frame.maxY * 0.8, width: UIScreen.main.bounds.size.width / 2.5, height: UIScreen.main.bounds.size.height / 8)
+        let img = UIImage(named: "ms-apps-logo-splash")
+        logoSplashScreen.frame = CGRect(x: (UIScreen.main.bounds.size.width - (UIScreen.main.bounds.size.width / 2.5)) / 2, y: view.frame.maxY * 0.8, width: UIScreen.main.bounds.size.width / 2.5, height: UIScreen.main.bounds.size.width / 10)
         logoSplashScreen.image = img
         view.addSubview(logoSplashScreen)
     }
