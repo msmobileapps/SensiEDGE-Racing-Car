@@ -154,13 +154,18 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
 //        @objc var hasGeneralPurpose:Bool {get}
 //        @objc var txPower:UInt8 {get}
             
-            let nodeInfo = NodeInfo(name: peripheral.name, address: nil, featureMap: 0, deviceId: UInt8(peripheral.identifier.uuidString) ?? 0, protocolVersion: 0, boardType: BlueSTSDKNodeType.blue_Coin, isSleeping: false, hasGeneralPurpose: false, txPower: 0)
-                        
+            let nodeInfo = NodeInfo(name: peripheral.name, address: nil, featureMap: 1841202240, deviceId: UInt8(peripheral.identifier.uuidString) ?? 0, protocolVersion: 1, boardType: BlueSTSDKNodeType.blue_Coin, isSleeping: false, hasGeneralPurpose: false, txPower: 0)
+            
+            let node = BlueSTSDKNode(peripheral, rssi: RSSI, advertiseInfo:nodeInfo)
+            mNodes.append(node)
+            tableView.reloadData()
+              
+            /*
             var advertiseInfo = advertisementData
             advertiseInfo["kCBAdvDataManufacturerData"] = nodeInfo
             advertiseInfo["kCBAdvDataTxPowerLevel"] = 0
             
-            print(advertisementData)
+            print(advertiseInfo)
 
             let firstMatch = mAdvertiseFilters.lazy.compactMap{ $0.filter(advertiseInfo)}.first
             print(firstMatch)
@@ -169,6 +174,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
                 mNodes.append(node)
                 tableView.reloadData()
             }
+ */
             
 //            mPeripheral=peripheral;
 //            mPeripheral.delegate=self;
@@ -245,13 +251,14 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
     }
     
     func node(_ node: BlueSTSDKNode, didChange newState: BlueSTSDKNodeState, prevState: BlueSTSDKNodeState) {
+        print(newState.rawValue)
         if newState.rawValue == 3{
             DispatchQueue.main.async { [unowned self] in
                 self.updateUI()
             }
             if let features = self.mNodes.first?.getFeatures(){
                 for feature in features{
-                    // print(feature.name)
+                    print(feature.name)
                     if feature.name == "Accelerometer" && isAccelometerDefined{
                         print(node.isEnableNotification(feature))
                         feature.add(self)
@@ -308,7 +315,7 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
     }
     
     func didUpdate(_ feature: BlueSTSDKFeature, sample: BlueSTSDKFeatureSample) {
-        
+                
         if feature.name == "Accelerometer"{
             if let sampleFirst = sample.data.first  {
                 
