@@ -215,9 +215,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             if state == .DAY && backgroundState == .NIGHT{
                 changeBackgroundTo(.NIGHT)
+                changeCarsLightsTo(.NIGHT)
                 backgroundState = .DAY
             }else if state == .NIGHT && backgroundState == .DAY{
                 changeBackgroundTo(.DAY)
+                changeCarsLightsTo(.DAY)
                 backgroundState = .NIGHT
             }
         }
@@ -243,16 +245,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         liveTexture = SKTexture(imageNamed: "live")
         liveTexture.filteringMode = SKTextureFilteringMode.nearest
         
-        blueTextureEnemyUp = SKTexture(imageNamed: "BlueEnemyUp")
+        blueTextureEnemyUp = SKTexture(imageNamed: "OrangeEnemyUp")
         blueTextureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
         
-        blueTextureEnemyDown = SKTexture(imageNamed: "BlueEnemyDown")
+        blueTextureEnemyDown = SKTexture(imageNamed: "OrangeEnemyDown")
         blueTextureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
         
-        greenTextureEnemyUp = SKTexture(imageNamed: "GreenEnemyUp")
+        greenTextureEnemyUp = SKTexture(imageNamed: "WhiteEnemyUp")
         greenTextureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
         
-        greenTextureEnemyDown = SKTexture(imageNamed: "GreenEnemyDown")
+        greenTextureEnemyDown = SKTexture(imageNamed: "WhiteEnemyDown")
         greenTextureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
         
         whiteRedCarUp = SKTexture(imageNamed: "whiteRedCarUp")
@@ -267,6 +269,82 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         blackTextureEnemyDown = SKTexture(imageNamed: "BlackCarDown")
         blackTextureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
         
+    }
+    
+    func changeCarsLightsTo(_ state:BackgroundState){
+        if state == .NIGHT{
+            textureCarUp = SKTexture(imageNamed: "CarUpNight")
+            textureCarUp.filteringMode = SKTextureFilteringMode.nearest
+            
+            textureCarDown = SKTexture(imageNamed: "CarDownNight")
+            textureCarDown.filteringMode = SKTextureFilteringMode.nearest
+            
+            blueTextureEnemyUp = SKTexture(imageNamed: "OrangeEnemyUpNight")
+            blueTextureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
+            
+            blueTextureEnemyDown = SKTexture(imageNamed: "OrangeEnemyDownNight")
+            blueTextureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
+            
+            greenTextureEnemyUp = SKTexture(imageNamed: "WhiteEnemyUpNight")
+            greenTextureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
+            
+            greenTextureEnemyDown = SKTexture(imageNamed: "WhiteEnemyDownNight")
+            greenTextureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
+            
+            textureEnemyUp = SKTexture(imageNamed: "greenCarUpNight")
+            textureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
+            
+            textureEnemyDown = SKTexture(imageNamed: "greenCarDownNight")
+            textureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
+            
+            whiteRedCarUp = SKTexture(imageNamed: "whiteRedCarUpNight")
+            whiteRedCarUp.filteringMode = SKTextureFilteringMode.nearest
+            
+            whiteRedCarDown = SKTexture(imageNamed: "whiteRedCarDownNight")
+            whiteRedCarDown.filteringMode = SKTextureFilteringMode.nearest
+            
+            blackTextureEnemyUp = SKTexture(imageNamed: "BlackCarUpNight")
+            blackTextureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
+            
+            blackTextureEnemyDown = SKTexture(imageNamed: "BlackCarDownNight")
+            blackTextureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
+        }else if state == .DAY{
+            textureCarUp = SKTexture(imageNamed: "CarUp")
+            textureCarUp.filteringMode = SKTextureFilteringMode.nearest
+            
+            textureCarDown = SKTexture(imageNamed: "CarDown")
+            textureCarDown.filteringMode = SKTextureFilteringMode.nearest
+            
+            blueTextureEnemyUp = SKTexture(imageNamed: "OrangeEnemyUp")
+            blueTextureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
+            
+            blueTextureEnemyDown = SKTexture(imageNamed: "OrangeEnemyDown")
+            blueTextureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
+            
+            greenTextureEnemyUp = SKTexture(imageNamed: "WhiteEnemyUp")
+            greenTextureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
+            
+            greenTextureEnemyDown = SKTexture(imageNamed: "WhiteEnemyDown")
+            greenTextureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
+            
+            textureEnemyUp = SKTexture(imageNamed: "greenCarUp")
+            textureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
+            
+            textureEnemyDown = SKTexture(imageNamed: "greenCarDown")
+            textureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
+            
+            whiteRedCarUp = SKTexture(imageNamed: "whiteRedCarUp")
+            whiteRedCarUp.filteringMode = SKTextureFilteringMode.nearest
+            
+            whiteRedCarDown = SKTexture(imageNamed: "whiteRedCarDown")
+            whiteRedCarDown.filteringMode = SKTextureFilteringMode.nearest
+            
+            blackTextureEnemyUp = SKTexture(imageNamed: "BlackCarUp")
+            blackTextureEnemyUp.filteringMode = SKTextureFilteringMode.nearest
+            
+            blackTextureEnemyDown = SKTexture(imageNamed: "BlackCarDown")
+            blackTextureEnemyDown.filteringMode = SKTextureFilteringMode.nearest
+        }
     }
     
     func showBar() {
@@ -502,9 +580,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case .right:
             pos = POSITION_TRACK_3
         }
-        let moveAction = SKAction.move(to: CGPoint(x:(self.frame.size.width) * pos, y: 100), duration: 0.5)
-        self.smoke.run(moveAction)
-        self.car.node.run(moveAction)
+        if car != nil{
+            let moveAction = SKAction.move(to: CGPoint(x:(self.frame.size.width) * pos, y: 100), duration: 0.5)
+            self.smoke.run(moveAction)
+            self.car.node.run(moveAction)
+        }
     }
     
     /* Get random color car enemy */
