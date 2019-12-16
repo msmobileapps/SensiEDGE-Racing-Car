@@ -28,7 +28,7 @@ class MainMenuScene: SKScene {
         let title1:SKLabelNode = SKLabelNode()
         
         title1.fontName = "AvenirNext-Regular"
-        title1.fontSize = 140
+        title1.fontSize = 120
         title1.numberOfLines = 2
         title1.text = Constant.secondMainTitle
         title1.alpha = 1

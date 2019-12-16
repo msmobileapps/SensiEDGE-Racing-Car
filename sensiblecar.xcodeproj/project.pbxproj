@@ -62,7 +62,7 @@
 
 /* Begin PBXFileReference section */
 		172DCB0823A0E9DB006D3343 /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
-		17405AAF239E542D0004BCD3 /* SensiBLE Car.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SensiBLE Car.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17405AAF239E542D0004BCD3 /* SensiBLE Racing Car.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SensiBLE Racing Car.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		17405AB2239E542D0004BCD3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17405AB7239E542D0004BCD3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		17405ABA239E542D0004BCD3 /* sensiblecar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = sensiblecar.xcdatamodel; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 		17405AB0239E542D0004BCD3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17405AAF239E542D0004BCD3 /* SensiBLE Car.app */,
+				17405AAF239E542D0004BCD3 /* SensiBLE Racing Car.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -201,7 +201,7 @@
 			);
 			name = sensiblecar;
 			productName = sensiblecar;
-			productReference = 17405AAF239E542D0004BCD3 /* SensiBLE Car.app */;
+			productReference = 17405AAF239E542D0004BCD3 /* SensiBLE Racing Car.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -442,7 +442,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 3K3Q4658XN;
 				INFOPLIST_FILE = sensiblecar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -450,7 +450,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.msapps.sensiblecar;
-				PRODUCT_NAME = "SensiBLE Car";
+				PRODUCT_NAME = "SensiBLE Racing Car";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -461,7 +461,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 3K3Q4658XN;
 				INFOPLIST_FILE = sensiblecar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -469,7 +469,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.msapps.sensiblecar;
-				PRODUCT_NAME = "SensiBLE Car";
+				PRODUCT_NAME = "SensiBLE Racing Car";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

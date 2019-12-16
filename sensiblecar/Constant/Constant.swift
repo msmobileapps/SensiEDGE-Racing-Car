@@ -12,6 +12,6 @@ struct Constant {
     
     static let mainTitle = "Sensible Car"
     static let firstMainTitle = "SensiBLE"
-    static let secondMainTitle = "Car"
+    static let secondMainTitle = "Racing Car"
 
 }
