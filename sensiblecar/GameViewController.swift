@@ -45,7 +45,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
         mManager = BlueSTSDKManager.sharedInstance
         mManager.addDelegate(self)
         centralManager = CBCentralManager(delegate: self, queue: nil)
-        centralManager.delegate = self
+//        centralManager.delegate = self
         
     }
     
@@ -62,9 +62,17 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
         case .poweredOff:
             print("central.state is .poweredOff")
             addAlert(title: "Bluetooth Disconnected", msg: "Please turn on the blutooth connection", btn: "Open Bluetooth Settings", handler: { _ in
-                let url = URL(string:"App-Prefs:root=Bluetooth")
-                let app = UIApplication.shared
-                app.open(url!, options: [:], completionHandler: nil)
+                guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                  return
+                }
+                if UIApplication.shared.canOpenURL(settingsUrl)  {
+                  if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(settingsUrl)
+                  }
+                  else  {
+                    UIApplication.shared.openURL(settingsUrl)
+                  }
+                }
             }, action: nil)
         case .poweredOn:
             print("central.state is .poweredOn")
@@ -123,7 +131,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
         present(alert, animated: true, completion: nil)
     }
     
-    
+    /*
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         let mAdvertiseFilters:[BlueSTSDKAdvertiseFilter] = BlueSTSDKManager.DEFAULT_ADVERTISE_FILTER
         
@@ -193,7 +201,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
         }
         
     }
-  
+  */
 }
 
 extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate, BlueSTSDKFeatureAutoConfigurableDelegate, BlueSTSDKNodeStateDelegate, BlueSTSDKFeatureLogDelegate{
@@ -258,7 +266,7 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
             }
             if let features = self.mNodes.first?.getFeatures(){
                 for feature in features{
-                    print(feature.name)
+//                    print(feature.name)
                     if feature.name == "Accelerometer" && isAccelometerDefined{
                         print(node.isEnableNotification(feature))
                         feature.add(self)
