@@ -92,6 +92,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     /* Fix tracks positions, defines enemies color and prepare scene*/
     func initializeApp(){
         
+        self.setTextures()
+        self.showBar()
+        self.showBackground()
+        self.showPlayer()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(updateCarPosition(_:)), name: .CarPosition, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateBackgroundState(_:)), name: .LightStatus, object: nil)
@@ -100,10 +105,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
         
-        self.setTextures()
-        self.showBar()
-        self.showBackground()
-        self.showPlayer()
         
         let isLogoLoaded = defaults.bool(forKey: "isLogoLoded")
         
@@ -136,6 +137,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.gameStatus = .playing
     }
+    
+//    deinit {
+//        NotificationCenter.default.removeObserver(self)
+//    }
     
     func addLogoSplashScreen(){
         let img = UIImage(named: "ms-apps-logo")
