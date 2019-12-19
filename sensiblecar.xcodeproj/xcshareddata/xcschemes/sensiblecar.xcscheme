@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "17405AAE239E542D0004BCD3"
-               BuildableName = "SensiBLE Car.app"
+               BuildableName = "SensiEDGE Racing Car.app"
                BlueprintName = "sensiblecar"
                ReferencedContainer = "container:sensiblecar.xcodeproj">
             </BuildableReference>
@@ -29,6 +29,8 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -45,11 +47,13 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "17405AAE239E542D0004BCD3"
-            BuildableName = "SensiBLE Car.app"
+            BuildableName = "SensiEDGE Racing Car.app"
             BlueprintName = "sensiblecar"
             ReferencedContainer = "container:sensiblecar.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -62,7 +66,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "17405AAE239E542D0004BCD3"
-            BuildableName = "SensiBLE Car.app"
+            BuildableName = "SensiEDGE Racing Car.app"
             BlueprintName = "sensiblecar"
             ReferencedContainer = "container:sensiblecar.xcodeproj">
          </BuildableReference>

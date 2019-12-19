@@ -34,12 +34,14 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
     let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
     let imgSplashScreen: UIImageView = UIImageView()
     let logoSplashScreen: UIImageView = UIImageView()
+    let searchingLabel:UILabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         DispatchQueue.main.async { [unowned self] in
             self.addTableView()
+            self.showSearchingLabel()
         }
                 
         mManager = BlueSTSDKManager.sharedInstance
@@ -76,7 +78,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate {
             }, action: nil)
         case .poweredOn:
             print("central.state is .poweredOn")
-            mManager.discoveryStart(10*1000)
+            mManager.discoveryStart() //mManager.discoveryStart(10*1000)
             central.scanForPeripherals(withServices: nil, options: nil)
         @unknown default:
             print("default")
@@ -230,6 +232,21 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
         view.addSubview(logoSplashScreen)
     }
     
+    func showSearchingLabel(){
+        searchingLabel.text = "Searching for a device..."
+        searchingLabel.textColor = UIColor.white
+        searchingLabel.font = .systemFont(ofSize: 40)
+        searchingLabel.textAlignment = .center
+        
+        view.addSubview(searchingLabel)
+        searchingLabel.translatesAutoresizingMaskIntoConstraints = false
+        searchingLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        searchingLabel.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        searchingLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        searchingLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        
+    }
+    
     func updateUI(){
         
         tableView.removeFromSuperview()
@@ -370,6 +387,10 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
             if didDiscoverNode.name.contains("Sensi"){
                 self.mNodes.append(didDiscoverNode)
                 self.tableView.reloadData()
+                self.tableView.separatorStyle = .singleLine
+                if !self.searchingLabel.isHidden{
+                    self.searchingLabel.isHidden = true
+                }
             }
         }
         print("NODE!!!! ",didDiscoverNode)
@@ -399,6 +420,10 @@ extension GameViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.delegate = self
         tableView.dataSource = self
         
+        tableView.backgroundColor = UIColor.black
+        tableView.separatorStyle = .none
+        tableView.separatorColor = UIColor.darkGray
+        
         setupTableView()
     }
     
@@ -424,6 +449,10 @@ extension GameViewController: UITableViewDataSource, UITableViewDelegate {
         let node = mNodes[indexPath.row]
         cell.textLabel?.text = node.name
         cell.detailTextLabel?.text = node.addressEx()
+        
+        cell.textLabel?.textColor = UIColor.white
+        cell.detailTextLabel?.textColor = UIColor.white
+        cell.backgroundColor = UIColor.black
         
         return cell
     }
