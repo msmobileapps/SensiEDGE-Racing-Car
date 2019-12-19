@@ -10,8 +10,8 @@ import Foundation
 
 struct Constant {
     
-    static let mainTitle = "Sensible Car"
-    static let firstMainTitle = "SensiBLE"
+    static let mainTitle = "SensiEDGE Racing Car"
+    static let firstMainTitle = "SensiEDGE"
     static let secondMainTitle = "Racing Car"
 
 }
