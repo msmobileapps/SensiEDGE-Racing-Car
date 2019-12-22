@@ -19,20 +19,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SensiEDGE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IUR-oV-vwH">
-                                <rect key="frame" x="25" y="178.5" width="364.5" height="91"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="76"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Racing Car" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GKC-4N-CnH">
-                                <rect key="frame" x="35" y="301.5" width="344.5" height="90"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="75"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GhQ-ZT-0r5">
-                                <rect key="frame" x="52" y="435.5" width="310" height="366.5"/>
+                                <rect key="frame" x="52" y="393" width="310" height="409"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yjy-Cb-JyP">
                                         <rect key="frame" x="105" y="24" width="100" height="100"/>
@@ -69,12 +57,21 @@
                                 </connections>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ms-apps-logo-splash" translatesAutoresizingMaskIntoConstraints="NO" id="636-M9-tUN">
-                                <rect key="frame" x="107" y="788" width="200" height="50"/>
+                                <rect key="frame" x="107" y="788" width="200" height="50.000000000000114"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="IyP-Sm-WXn"/>
                                     <constraint firstAttribute="height" constant="50" id="xlb-JD-77m"/>
                                 </constraints>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_SensiEDGE" translatesAutoresizingMaskIntoConstraints="NO" id="CPO-iN-y1j">
+                                <rect key="frame" x="20" y="124" width="374" height="155"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Racing Car" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GKC-4N-CnH">
+                                <rect key="frame" x="28" y="263" width="358" height="86"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="72"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -83,11 +80,14 @@
                             <constraint firstItem="636-M9-tUN" firstAttribute="centerX" secondItem="viJ-gJ-EYu" secondAttribute="centerX" id="9Lw-kB-mtb"/>
                             <constraint firstItem="Gpd-nq-aQ6" firstAttribute="top" secondItem="636-M9-tUN" secondAttribute="bottom" constant="24" id="CBE-ow-MOm"/>
                             <constraint firstItem="GhQ-ZT-0r5" firstAttribute="leading" secondItem="viJ-gJ-EYu" secondAttribute="leadingMargin" constant="32" id="PGM-fb-7PA"/>
+                            <constraint firstItem="GKC-4N-CnH" firstAttribute="leading" secondItem="viJ-gJ-EYu" secondAttribute="leadingMargin" constant="8" id="R2a-iy-zjv"/>
+                            <constraint firstItem="CPO-iN-y1j" firstAttribute="centerY" secondItem="viJ-gJ-EYu" secondAttribute="centerY" multiplier="0.45" id="VoH-N6-my5"/>
                             <constraint firstItem="GKC-4N-CnH" firstAttribute="centerX" secondItem="viJ-gJ-EYu" secondAttribute="centerX" id="Y0Q-8g-l0J"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CPO-iN-y1j" secondAttribute="trailing" id="Ye4-d5-7K3"/>
                             <constraint firstItem="Gpd-nq-aQ6" firstAttribute="top" secondItem="GhQ-ZT-0r5" secondAttribute="bottom" constant="60" id="dHJ-b3-plK"/>
-                            <constraint firstItem="IUR-oV-vwH" firstAttribute="centerX" secondItem="viJ-gJ-EYu" secondAttribute="centerX" id="mT2-Tj-J8g"/>
-                            <constraint firstItem="GKC-4N-CnH" firstAttribute="top" secondItem="IUR-oV-vwH" secondAttribute="bottom" constant="32" id="phb-Xk-ffk"/>
-                            <constraint firstItem="IUR-oV-vwH" firstAttribute="centerY" secondItem="viJ-gJ-EYu" secondAttribute="centerY" multiplier="0.5" id="xnA-4k-57I"/>
+                            <constraint firstItem="CPO-iN-y1j" firstAttribute="leading" secondItem="viJ-gJ-EYu" secondAttribute="leadingMargin" id="eAR-hP-j8W"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="GKC-4N-CnH" secondAttribute="trailing" constant="8" id="mGr-X1-WXB"/>
+                            <constraint firstItem="GKC-4N-CnH" firstAttribute="top" secondItem="CPO-iN-y1j" secondAttribute="bottom" constant="-16" id="oSC-oQ-HQM"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -111,7 +111,7 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <navigationItem key="navigationItem" id="03w-NO-2iI"/>
                 </viewController>
@@ -122,6 +122,7 @@
     </scenes>
     <resources>
         <image name="bluetooth-icon" width="512" height="512"/>
+        <image name="logo_SensiEDGE" width="637" height="155"/>
         <image name="ms-apps-logo-splash" width="2003" height="491"/>
     </resources>
     <inferredMetricsTieBreakers>

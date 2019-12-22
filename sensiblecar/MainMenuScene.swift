@@ -14,16 +14,21 @@ class MainMenuScene: SKScene {
     override func didMove(to view: SKView) {
         self.backgroundColor = UIColor.black
         
-        let title:SKLabelNode = SKLabelNode()
+//        let title:SKLabelNode = SKLabelNode()
+//
+//        title.fontName = "AvenirNext-Regular"
+//        title.fontSize = 116
+//        title.numberOfLines = 2
+//        title.text = Constant.firstMainTitle
+//        title.alpha = 1
+//        title.position = CGPoint(x: self.frame.width/2, y: self.frame.height*0.70)
+//
+//        self.addChild(title)
         
-        title.fontName = "AvenirNext-Regular"
-        title.fontSize = 116
-        title.numberOfLines = 2
-        title.text = Constant.firstMainTitle
-        title.alpha = 1
-        title.position = CGPoint(x: self.frame.width/2, y: self.frame.height*0.70)
-        
-        self.addChild(title)
+        let logo:SKSpriteNode = SKSpriteNode(imageNamed: "logo_SensiEDGE")
+        logo.size = CGSize(width: 500, height: 500/4.246)
+        logo.position = CGPoint(x: self.frame.width/2, y: self.frame.height*0.75)
+        self.addChild(logo)
         
         let title1:SKLabelNode = SKLabelNode()
         
