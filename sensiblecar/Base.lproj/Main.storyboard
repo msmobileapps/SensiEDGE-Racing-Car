@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GhQ-ZT-0r5">
-                                <rect key="frame" x="52" y="393" width="310" height="409"/>
+                                <rect key="frame" x="52" y="470.5" width="310" height="331.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yjy-Cb-JyP">
                                         <rect key="frame" x="105" y="24" width="100" height="100"/>
@@ -37,7 +37,7 @@
                                         <rect key="frame" x="84" y="156" width="142" height="40"/>
                                         <fontDescription key="fontDescription" name="Symbol" family="Symbol" pointSize="28"/>
                                         <state key="normal" title="Tap to scan">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" red="0.92941176470588238" green="0.24812304973602295" blue="0.16078431372549018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <segue destination="BYZ-38-t0r" kind="show" id="wlj-O6-lzM"/>
@@ -57,19 +57,19 @@
                                 </connections>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ms-apps-logo-splash" translatesAutoresizingMaskIntoConstraints="NO" id="636-M9-tUN">
-                                <rect key="frame" x="107" y="788" width="200" height="50.000000000000114"/>
+                                <rect key="frame" x="107" y="788" width="200" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="IyP-Sm-WXn"/>
                                     <constraint firstAttribute="height" constant="50" id="xlb-JD-77m"/>
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_SensiEDGE" translatesAutoresizingMaskIntoConstraints="NO" id="CPO-iN-y1j">
-                                <rect key="frame" x="20" y="124" width="374" height="155"/>
+                                <rect key="frame" x="20" y="46.5" width="374" height="310"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Racing Car" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GKC-4N-CnH">
-                                <rect key="frame" x="28" y="263" width="358" height="86"/>
+                                <rect key="frame" x="28" y="340.5" width="358" height="86"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="72"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" red="0.26308101415634155" green="0.62550514936447144" blue="0.31579563021659851" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
