@@ -236,6 +236,8 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
         searchingLabel.text = "Searching for a device..."
         searchingLabel.textColor = UIColor.white
         searchingLabel.font = .systemFont(ofSize: 40)
+        searchingLabel.minimumScaleFactor = 0.5
+        searchingLabel.adjustsFontSizeToFitWidth = true
         searchingLabel.textAlignment = .center
         
         view.addSubview(searchingLabel)
@@ -420,7 +422,14 @@ extension GameViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.backgroundColor = UIColor.black
+        if #available(iOS 12.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+                tableView.backgroundColor = UIColor.black.withAlphaComponent(0)
+            }
+        } else {
+            tableView.backgroundColor = UIColor.black
+        }
+        
         tableView.separatorStyle = .none
         tableView.separatorColor = UIColor.darkGray
         
@@ -435,9 +444,7 @@ extension GameViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
-        
         tableView.register(SubtitleTableViewCell.self, forCellReuseIdentifier: "nodeCell")
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -450,9 +457,17 @@ extension GameViewController: UITableViewDataSource, UITableViewDelegate {
         cell.textLabel?.text = node.name
         cell.detailTextLabel?.text = node.addressEx()
         
-        cell.textLabel?.textColor = UIColor.white
-        cell.detailTextLabel?.textColor = UIColor.white
-        cell.backgroundColor = UIColor.black
+        if #available(iOS 12.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+                cell.textLabel?.textColor = UIColor.black
+                cell.detailTextLabel?.textColor = UIColor.black
+                cell.backgroundColor = UIColor.black.withAlphaComponent(0)
+            }
+        } else {
+            cell.textLabel?.textColor = UIColor.white
+            cell.detailTextLabel?.textColor = UIColor.white
+            cell.backgroundColor = UIColor.black
+        }
         
         return cell
     }
