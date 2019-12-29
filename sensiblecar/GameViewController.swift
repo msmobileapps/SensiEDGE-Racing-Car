@@ -234,7 +234,13 @@ extension GameViewController: BlueSTSDKManagerDelegate, BlueSTSDKFeatureDelegate
     
     func showSearchingLabel(){
         searchingLabel.text = "Searching for a device..."
-        searchingLabel.textColor = UIColor.white
+        if #available(iOS 12.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+                searchingLabel.textColor = UIColor.black
+            }
+        } else {
+            searchingLabel.textColor = UIColor.white
+        }
         searchingLabel.font = .systemFont(ofSize: 40)
         searchingLabel.minimumScaleFactor = 0.5
         searchingLabel.adjustsFontSizeToFitWidth = true
