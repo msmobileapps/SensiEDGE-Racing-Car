@@ -285,7 +285,6 @@ extension BlueSTSDKManager : CBCentralManagerDelegate {
             //get the fist value != nil returned by a filter
             let firstMatch = mAdvertiseFilters.lazy.compactMap{ $0.filter(advertisementData)}.first
             if let info = firstMatch{
-                print(firstMatch?.boardType.rawValue," ",firstMatch?.featureMap," ",firstMatch?.protocolVersion," ",firstMatch?.description)
                 let newNode = BlueSTSDKNode(peripheral, rssi: RSSI, advertiseInfo:info)
                 addAndNotify(node: newNode)
                 print(advertisementData)
